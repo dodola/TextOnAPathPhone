@@ -1,0 +1,171 @@
+﻿<phone:PhoneApplicationPage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:TextOnAPath="clr-namespace:TextOnAPath;assembly=TextOnAPathPhone"
+                            xmlns:core="clr-namespace:System;assembly=mscorlib"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            x:Class="TextOnAPathTest.MainPage"
+                            mc:Ignorable="d"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="True">
+    <UserControl.Resources>
+        <!-- the geometries below are added to the combobox in code behind -->
+        <!-- code behind uses PathConverter to convert String to PathGeometry -->
+        <core:String x:Key="PathGeometry">M50,242 C120,361 230.5,276.5 230.5,276.5 L305.98807,182.3422 C305.98807,182.3422 419.5,179.5002 367.5,265.49993 315.5,351.49966 238.50028,399.49924 238.50028,399.49924 L61.500017,420.49911</core:String>
+        <EllipseGeometry x:Key="EllipseGeometry"
+                         Center="50,100"
+                         RadiusX="50"
+                         RadiusY="100" />
+        <RectangleGeometry x:Key="RectangleGeometry"
+                           Rect="0,0,100,200" />
+        <LineGeometry x:Key="LineGeometry"
+                      StartPoint="50,0"
+                      EndPoint="100,100" />
+    </UserControl.Resources>
+    <!--LayoutRoot 是包含所有页面内容的根网格-->
+    <Grid x:Name="LayoutRoot"
+          Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- 本地化说明:
+            若要本地化显示的字符串，请将其值复制到应用程序的非特定语言资源文件(AppResources.resx)
+            中的适当命名的键，然后
+            将属性的引号之间的硬编码文本值
+            替换为其路径指向该字符串名称的绑定子句。
+
+            例如:
+
+                Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+
+            此绑定指向模板的名为“ApplicationTitle”的字符串资源。
+
+            在“项目属性”选项卡中添加受支持的语言将会为
+            每种语言创建一个新的 resx 文件，该文件可以包含 UI 字符串的翻译值
+            。这些示例中的绑定将导致在运行时从
+            与应用程序的 CurrentUICulture 匹配的 .resx 文件中
+            提取属性的值。
+         -->
+
+        <!--TitlePanel 包含应用程序的名称和页标题-->
+        <StackPanel x:Name="TitlePanel"
+                    Grid.Row="0"
+                    Margin="12,17,0,28">
+            <TextBlock Text="TextOnAPathTest"
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       Margin="12,0" />
+            <TextBlock Text="测试"
+                       Margin="9,-7,0,0"
+                       Style="{StaticResource PhoneTextTitle1Style}" />
+        </StackPanel>
+
+        <!--ContentPanel - 在此处放置其他内容-->
+        <Grid x:Name="ContentPanel"
+              Grid.Row="1"
+              Margin="12,0,12,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"
+                                   MinHeight="79" />
+                    <RowDefinition Height="Auto"
+                                   MinHeight="54" />
+                    <RowDefinition Height="Auto"
+                                   MinHeight="30" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0"
+                        BorderThickness="2">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock HorizontalAlignment="Left"
+                                   Margin="5">输入文本:</TextBlock>
+                        <TextBox Margin="5"
+                                 Name="textBox"
+                                 Width="Auto"
+                                 HorizontalAlignment="Left"
+                                 MinWidth="200"
+                                 TextChanged="TextBox_TextChanged"
+                                 Text="长亭外,古道边,一行白鹭上青天，红酥手 将进酒 你既无心我便休，思悠悠 恨悠悠 独立小楼风满袖，亲射虎 看孙郎 一见知君便断肠" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="1"
+                        BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock HorizontalAlignment="Left"
+                                   Margin="5"
+                                   Name="label2"
+                                   VerticalAlignment="Center">选择样式:</TextBlock>
+                        <toolkit:ListPicker Margin="5"
+                                            Name="ListPickerSgo"
+                                            ExpansionMode="FullScreenOnly"
+                                            VerticalContentAlignment="Center"
+                                            Width="350">
+                            <toolkit:ListPicker.FullModeItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="16 21 0 20">
+                                        <TextBlock Text="{Binding}"
+                                                   Margin="0 0 0 0"
+                                                   FontSize="43"
+                                                   FontFamily="{StaticResource PhoneFontFamilyLight}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </toolkit:ListPicker.FullModeItemTemplate>
+                        </toolkit:ListPicker>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="2"
+                        BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox HorizontalAlignment="Left"
+                                  Margin="5"
+                                  Name="drawGeometry"
+                                  Content="绘制路径"
+                                  Checked="drawGeometry_Checked"
+                                  Unchecked="drawGeometry_Unchecked" />
+                        <CheckBox Margin="15,5,5,5"
+                                  Name="scaleGeometry"
+                                  Content="自适应"
+                                  Checked="scaleGeometry_Checked"
+                                  Unchecked="scaleGeometry_Unchecked" />
+                    </StackPanel>
+                </Border>
+
+                <TextOnAPath:TextOnAPath Grid.Row="3"
+                                         x:Name="TextOnAPath"
+                                         FontSize="18"
+                                         GeoPathColor="{StaticResource PhoneForegroundBrush}"
+                                         Foreground="{StaticResource PhoneAccentBrush}" />
+            </Grid>
+
+        </Grid>
+        <TextBox HorizontalAlignment="Left"
+                 Height="72"
+                 Margin="632,279,-608,0"
+                 Grid.Row="1"
+                 TextWrapping="Wrap"
+                 Text="TextBox"
+                 VerticalAlignment="Top"
+                 Width="456" />
+
+        <!--取消注释，以显示对齐网格，从而帮助确保
+            控件在公用边界上对齐。图像在系统栏中显示时的
+            上边距为 -32px。如果隐藏了系统栏，则将此值设为 0
+            (或完全删除边距)。
+
+            在发送之前删除此 XAML 和图像本身。-->
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
+    </Grid>
+
+</phone:PhoneApplicationPage>

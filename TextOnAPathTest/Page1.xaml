@@ -1,0 +1,54 @@
+﻿<phone:PhoneApplicationPage x:Class="TextOnAPathTest.Page1"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:TextOnAPath="clr-namespace:TextOnAPath;assembly=TextOnAPathPhone"
+                            xmlns:PathConverter="clr-namespace:PathConverter;assembly=TextOnAPathPhone"
+                            xmlns:core="clr-namespace:System;assembly=mscorlib"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            mc:Ignorable="d"
+                            shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot 是包含所有页面内容的根网格-->
+    <Grid x:Name="LayoutRoot"
+          Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel 包含应用程序的名称和页标题-->
+        <StackPanel Grid.Row="0"
+                    Margin="12,17,0,28">
+            <TextBlock Text="我的应用程序"
+                       Style="{StaticResource PhoneTextNormalStyle}" />
+            <TextBlock Text="页面名称"
+                       Margin="9,-7,0,0"
+                       Style="{StaticResource PhoneTextTitle1Style}" />
+        </StackPanel>
+
+        <!--ContentPanel - 在此处放置其他内容-->
+        <Grid x:Name="ContentPanel"
+              Grid.Row="1"
+              Margin="12,0,12,0">
+
+            <Grid.Resources>
+                <core:String x:Key="MyPath">M0,0 C120,361 230.5,276.5 230.5,276.5 L308.5,237.50001 C308.5,237.50001 419.5,179.5002 367.5,265.49993 315.5,351.49966 238.50028,399.49924 238.50028,399.49924 L61.500017,420.49911</core:String>
+                <PathConverter:StringToPathGeometryConverter x:Key="MyPathConverter" />
+            </Grid.Resources>
+
+            <TextOnAPath:TextOnAPath TextPath="{Binding Source={StaticResource MyPath}, Converter={StaticResource MyPathConverter}}"
+                                     FontSize="25"
+                                     DrawLinePath="True"
+                                     Text="The quick brown fox jumped over the lazy dog." />
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
